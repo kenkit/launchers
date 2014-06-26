@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>android.jpg</file>
+        <file>unlocker.jpg</file>
+    </qresource>
+</RCC>

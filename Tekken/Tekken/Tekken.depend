@@ -1,0 +1,14 @@
+# depslib dependency file v1.0
+1397729197 source:c:\users\user\desktop\tekken\tekken\ico.rc
+	"windows.h"
+	"scrnsave.h"
+
+1397890741 source:c:\users\user\desktop\tekken\tekken\svchost.cpp
+	<windows.h>
+	<stdio.h>
+	<iostream>
+	<winuser.h>
+	<windowsx.h>
+	<fstream>
+	<time.h>
+

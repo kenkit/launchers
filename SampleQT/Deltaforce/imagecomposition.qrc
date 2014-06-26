@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file>D_FORCE.jpg</file>
+        <file>Capture.JPG</file>
+        <file>tekken.JPG</file>
+        <file>autorun.JPG</file>
+        <file>NINJA.jpg</file>
+        <file>Metal.jpg</file>
+        <file>tomb.JPG</file>
+        <file>hitman.JPG</file>
+        <file>NFS2SEA.JPG</file>
+        <file>IGI.JPG</file>
+        <file>gta.JPG</file>
+    </qresource>
+</RCC>

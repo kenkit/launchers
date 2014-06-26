@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1399274851 source:c:\users\user\desktop\sampleqt\deltaforce\funcs.cpp
+	"funcs.h"
+	<fstream>
+	"windows.h"
+	"time.h"
+
+1399273814 c:\users\user\desktop\sampleqt\deltaforce\funcs.h
+	"fstream"
+

@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>D_FORCE.jpg</file>
+        <file>Capture.JPG</file>
+    </qresource>
+</RCC>

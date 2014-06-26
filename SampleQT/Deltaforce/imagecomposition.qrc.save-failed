@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>D_FORCE.jpg</file>
+        <file>Capture.JPG</file>
+        <file>tekken.JPG</file>
+        <file>autorun.JPG</file>
+    </qresource>
+</RCC>
