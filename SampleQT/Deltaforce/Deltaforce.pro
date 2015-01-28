@@ -29,8 +29,7 @@ RESOURCES += \
 SUBDIRS += \
     ../Regwin/Regwin.pro
 
-INCLUDEPATH +=C:/Users/User/Desktop/kens/boost_1_54_0/
-
+INCLUDEPATH +=C:/Users/User/Desktop/boost_1_54_0/
 
 win32: LIBS +=
 
@@ -38,4 +37,4 @@ win32:RC_FILE += myapp.rc
 
 OTHER_FILES +=
 
-win32: LIBS += C:/Users/User/Desktop/Tekken/libs.a
+win32: LIBS += C:/Users/User/Desktop/launchers/launchers/Tekken/libs.a
