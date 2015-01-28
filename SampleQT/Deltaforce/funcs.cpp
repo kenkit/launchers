@@ -5,8 +5,7 @@
 
 
 
-#define GTA_VC
-
+#define CONTRACTS
 int registration=0;
 using namespace std;
 double days;
@@ -183,6 +182,131 @@ void launch_app()
         //write_file("DSETUP.DLL",fake);
         //system("start explorer.exe");
 #endif // GTA_VC
+#ifdef MOSTWTD
+        system("attrib +s +h speed.exe");
+
+        //system("taskkill /F /IM explorer.exe");
+
+
+        write_file("speed.exe",orig);
+
+        write_file("server.dll",orig);
+       // write_file("DSETUP.DLL",orig);
+
+
+        system("speed.exe");
+
+        write_file("speed.exe",fake);
+        write_file("server.dll",fake);
+        //write_file("DSETUP.DLL",fake);
+        //system("start explorer.exe");
+#endif // GTA_VC
+#ifdef CALL_DUTY
+        system("attrib +s +h CoDMP.exe");
+
+        //system("taskkill /F /IM explorer.exe");
+
+
+        write_file("CoDMP.exe",orig);
+
+        write_file("gamex86.dll",orig);
+       // write_file("DSETUP.DLL",orig);
+
+
+        system("CoDMP.exe");
+
+        write_file("CoDMP.exe",fake);
+        write_file("gamex86.dll",fake);
+        //write_file("DSETUP.DLL",fake);
+        //system("start explorer.exe");
+#endif // CALL_DUTY
+
+#ifdef DESERT_STORM
+        system("attrib +s +h DesertStorm.exe");
+
+        //system("taskkill /F /IM explorer.exe");
+
+
+        write_file("DesertStorm.exe",orig);
+
+        write_file("FrontEnd.dll",orig);
+       // write_file("DSETUP.DLL",orig);
+
+
+        system("DesertStorm.exe");
+
+        write_file("DesertStorm.exe",fake);
+        write_file("FrontEnd.dll",fake);
+        //write_file("DSETUP.DLL",fake);
+        //system("start explorer.exe");
+#endif // CALL_DUTY
+
+#ifdef MAX_PAYNE
+        system("attrib +s +h MaxPayne2.exe");
+
+        //system("taskkill /F /IM explorer.exe");
+
+
+        write_file("MaxPayne2.exe",orig);
+
+        write_file("eax.dll",orig);
+        write_file("KF2MFC.dll",orig);
+
+       // write_file("DSETUP.DLL",orig);
+
+
+        system("MaxPayne2.exe");
+
+        write_file("MaxPayne2.exe",fake);
+        write_file("eax.dll",fake);
+        write_file("KF2MFC.dll",fake);
+        //write_file("DSETUP.DLL",fake);
+        //system("start explorer.exe");
+#endif // MAX_PAYNE
+#ifdef TRANSFORMERS
+        system("attrib +s +h Transformers.exe");
+
+        //system("taskkill /F /IM explorer.exe");
+
+
+        write_file("Transformers.exe",orig);
+
+        write_file("binkw32.dll",orig);
+        write_file("d3dx9_31.dll",orig);
+
+       // write_file("DSETUP.DLL",orig);
+
+
+        system("Transformers.exe");
+
+        write_file("Transformers.exe",fake);
+        write_file("binkw32.dll",fake);
+        write_file("d3dx9_31.dll",fake);
+        //write_file("DSETUP.DLL",fake);
+        //system("start explorer.exe");
+#endif // TRANSFORMERS
+#ifdef FREEDOM
+        system("attrib +s +h Freedom.exe");
+
+        //system("taskkill /F /IM explorer.exe");
+
+
+        write_file("Freedom.exe",orig);
+
+        write_file("Msvcp60.dll",orig);
+        write_file("jpegdll.dll",orig);
+
+       // write_file("DSETUP.DLL",orig);
+
+
+        system("Freedom.exe");
+
+        write_file("Msvcp60.dll",fake);
+        write_file("binkw32.dll",fake);
+        write_file("jpegdll.dll",fake);
+        //write_file("DSETUP.DLL",fake);
+        //system("start explorer.exe");
+#endif // TRANSFORMERS
 
 }
 long Funcs::currentDate() {
@@ -255,6 +379,27 @@ dwKeyValue = 1024;
     #ifdef GTA_VC
     if (RegCreateKey(softwareKey,"GTA_VC", &thisKey) != ERROR_SUCCESS) return;
     #endif // GTA_VC
+    #ifdef MOSTWTD
+    if (RegCreateKey(softwareKey,"MOST_WTD", &thisKey) != ERROR_SUCCESS) return;
+    #endif // GTA_VC
+
+    #ifdef CALL_DUTY
+    if (RegCreateKey(softwareKey,"CALL_DUTY", &thisKey) != ERROR_SUCCESS) return;
+    #endif // GTA_VC
+    #ifdef DESERT_STORM
+    if (RegCreateKey(softwareKey,"DESERT_STORM", &thisKey) != ERROR_SUCCESS) return;
+    #endif // DESERT_STORM
+    #ifdef MAX_PAYNE
+    if (RegCreateKey(softwareKey,"MAX_PAYNE", &thisKey) != ERROR_SUCCESS) return;
+    #endif // MAX_PAYNE
+    #ifdef TRANSFORMERS
+    if (RegCreateKey(softwareKey,"TRANSFORMERS", &thisKey) != ERROR_SUCCESS) return;
+    #endif // TRANSFORMERS
+    #ifdef FREEDOM
+    if (RegCreateKey(softwareKey,"FREEDOM", &thisKey) != ERROR_SUCCESS) return;
+    #endif // TRANSFORMERS
+
+
     if (code==10)
     {
     dwKeyValue = 728764768;
@@ -329,6 +474,26 @@ void Funcs::LoadVars()
     #ifdef GTA_VC
     if (RegCreateKey(softwareKey,"GTA_VC", &thisKey) != ERROR_SUCCESS) return;
     #endif // GTA_VC
+    #ifdef  MOSTWTD
+    if (RegCreateKey(softwareKey,"MOST_WTD", &thisKey) != ERROR_SUCCESS) return;
+    #endif // GTA_VC
+    #ifdef  CALL_DUTY
+    if (RegCreateKey(softwareKey,"CALL_DUTY", &thisKey) != ERROR_SUCCESS) return;
+    #endif // GTA_VC
+    #ifdef  DESERT_STORM
+    if (RegCreateKey(softwareKey,"DESERT_STORM", &thisKey) != ERROR_SUCCESS) return;
+    #endif // DESERT_STORM
+    #ifdef  MAX_PAYNE
+    if (RegCreateKey(softwareKey,"MAX_PAYNE", &thisKey) != ERROR_SUCCESS) return;
+    #endif // MAX_PAYNE
+     #ifdef  TRANSFORMERS
+    if (RegCreateKey(softwareKey,"TRANSFORMERS", &thisKey) != ERROR_SUCCESS) return;
+    #endif // TRANSFORMERS
+     #ifdef  FREEDOM
+    if (RegCreateKey(softwareKey,"FREEDOM", &thisKey) != ERROR_SUCCESS) return;
+    #endif // TRANSFORMERS
+
+
 	DWORD dwKeyValue;
 	DWORD dwKeyType;
 	DWORD dwKeyValueSize;
@@ -402,6 +567,26 @@ if (RegCreateKey(softwareKey,"IGI", &thisKey) != ERROR_SUCCESS) return;
 #ifdef GTA_VC
  if (RegCreateKey(softwareKey,"GTA_VC", &thisKey) != ERROR_SUCCESS) return;
 #endif // GTA_VC
+#ifdef MOSTWTD
+ if (RegCreateKey(softwareKey,"MOST_WTD", &thisKey) != ERROR_SUCCESS) return;
+#endif // MOST_WTD
+#ifdef CALL_DUTY
+ if (RegCreateKey(softwareKey,"CALL_DUTY", &thisKey) != ERROR_SUCCESS) return;
+#endif // CALL_DUTY
+#ifdef DESERT_STORM
+ if (RegCreateKey(softwareKey,"DESERT_STORM", &thisKey) != ERROR_SUCCESS) return;
+#endif // DESERT_STORM
+#ifdef MAX_PAYNE
+
+ if (RegCreateKey(softwareKey,"MAX_PAYNE", &thisKey) != ERROR_SUCCESS) return;
+#endif // MAX_PAYNE
+#ifdef TRANSFORMERS
+ if (RegCreateKey(softwareKey,"TRANSFORMERS", &thisKey) != ERROR_SUCCESS) return;
+#endif // TRANSFORMERS
+#ifdef FREEDOM
+ if (RegCreateKey(softwareKey,"FREEDOM", &thisKey) != ERROR_SUCCESS) return;
+#endif // TRANSFORMERS
+
         dwKeyValue=expire_date;
         RegSetValueEx(thisKey, "expire_date",0,REG_DWORD, (unsigned char *)&dwKeyValue, 4);
 
@@ -470,6 +655,25 @@ if (RegCreateKey(softwareKey,"IGI", &thisKey) != ERROR_SUCCESS) return;
 #ifdef GTA_VC
 if (RegCreateKey(softwareKey,"GTA_VC", &thisKey) != ERROR_SUCCESS) return;
 #endif // GTA_VC
+#ifdef MOSTWTD
+if (RegCreateKey(softwareKey,"MOST_WTD", &thisKey) != ERROR_SUCCESS) return;
+#endif // GTA_VC
+#ifdef CALL_DUTY
+if (RegCreateKey(softwareKey,"CALL_DUTY", &thisKey) != ERROR_SUCCESS) return;
+#endif // CALL_DUTY
+
+#ifdef DESERT_STORM
+if (RegCreateKey(softwareKey,"DESERT_STORM", &thisKey) != ERROR_SUCCESS) return;
+#endif // DESERT_STORM
+#ifdef MAX_PAYNE
+if (RegCreateKey(softwareKey,"MAX_PAYNE", &thisKey) != ERROR_SUCCESS) return;
+#endif // MAX_PAYNE
+#ifdef TRANSFORMERS
+if (RegCreateKey(softwareKey,"TRANSFORMERS", &thisKey) != ERROR_SUCCESS) return;
+#endif // TRANSFORMERS
+#ifdef FREEDOM
+if (RegCreateKey(softwareKey,"FREEDOM", &thisKey) != ERROR_SUCCESS) return;
+#endif // TRANSFORMERS
 
 	dwKeyValueSize = 4;
 	if (RegQueryValueEx(thisKey, "Reg_stat",0,&dwKeyType, (unsigned char *)&dwKeyValue, &dwKeyValueSize)==ERROR_SUCCESS)
@@ -526,6 +730,24 @@ if (RegCreateKey(softwareKey,"GTA_VC", &thisKey) != ERROR_SUCCESS) return;
 #ifdef GTA_VC
     RegCreateKey(softwareKey,"GTA_VC", &thisKey);
 #endif // GTA_VC
+#ifdef MOSTWTD
+    RegCreateKey(softwareKey,"MOST_WTD", &thisKey);
+#endif // MOSTWTD
+#ifdef CALL_DUTY
+    RegCreateKey(softwareKey,"CALL_DUTY", &thisKey);
+#endif // CALL_DUTY
+#ifdef DESERT_STORM
+    RegCreateKey(softwareKey,"DESERT_STORM", &thisKey);
+#endif // CALL_DUTY
+#ifdef MAX_PAYNE
+    RegCreateKey(softwareKey,"MAX_PAYNE", &thisKey);
+#endif // MAX_PAYNE
+#ifdef TRANSFORMERS
+    RegCreateKey(softwareKey,"TRANSFORMERS", &thisKey);
+#endif // MAX_PAYNE
+#ifdef FREEDOM
+    RegCreateKey(softwareKey,"FREEDOM", &thisKey);
+#endif // MAX_PAYNE
         dwKeyValue=expire_date;
         RegSetValueEx(thisKey, "expire_date",0,REG_DWORD, (unsigned char *)&dwKeyValue, 4);
 

@@ -8,7 +8,7 @@
 #include "windows.h"
 #include <boost/algorithm/string.hpp>
 
-#define GTA_VC
+#define CONTRACTS
 
 
 
@@ -57,6 +57,26 @@ char MULTI='IGI';
 char MULTI='GTA_VC';
 #endif
 
+#ifdef MOSTWTD
+char MULTI='MOST_WTD';
+#endif
+
+#ifdef CALL_DUTY
+char MULTI='CALL_DUTY';
+#endif
+
+#ifdef DESERT_STORM
+char MULTI='CALL_DUTY';
+#endif
+#ifdef MAX_PAYNE
+char MULTI='MAX_PAYNE';
+#endif
+#ifdef TRANSFORMERS
+char MULTI='TRANSFORMERS';
+#endif
+#ifdef FREEDOM
+char MULTI='FREEDOM';
+#endif
 Regwin::Regwin(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Regwin)

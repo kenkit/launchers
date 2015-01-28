@@ -10,8 +10,6 @@
 
 
 
-#define GTA_VC
-
 
 
 

@@ -3,7 +3,7 @@
 #include "QMessageBox"
 #include "fstream"
 #include "funcs.h"
-#define GTA_VC
+#define CONTRACTS
 
 
 DeltaForce::DeltaForce(QWidget *parent) :
@@ -97,6 +97,31 @@ void DeltaForce::about()
                          <p>For more information please visit: <br> <b> http://Digital-Mine.blogspot.com/ <b>.</br></p>"));
 #endif
 
+#ifdef MOSTWTD
+        QMessageBox::about(this, tr("About NeedforspeedMostWanted"),
+                         tr("<b><u>NeedforspeedMostWanted</u></b><p> This software was designed an is currently maintained by storm.</p>\
+                         <p>For more information please visit: <br> <b> http://Digital-Mine.blogspot.com/ <b>.</br></p>"));
+#endif
+#ifdef CALL_DUTY
+           QMessageBox::about(this, tr("About Call Of Duty MW"),
+                          tr("<b><u>Call Of Duty Moden Warfare</u></b><p> This software was designed an is currently maintained by storm.</p>\
+                           <p>For more information please visit: <br> <b> http://Digital-Mine.blogspot.com/ <b>.</br></p>"));
+ #endif
+ #ifdef DESERT_STORM
+           QMessageBox::about(this, tr("About Desert Storm"),
+                           tr("<b><u>Desert Storm</u></b><p> This software was designed an is currently maintained by storm.</p>\
+                            <p>For more information please visit: <br> <b> http://Digital-Mine.blogspot.com/ <b>.</br></p>"));
+ #endif
+#ifdef TRANSFORMERS
+          QMessageBox::about(this, tr("About Transformer"),
+                              tr("<b><u>Transformer</u></b><p> This software was designed an is currently maintained by storm.</p>\
+                             <p>For more information please visit: <br> <b> http://Digital-Mine.blogspot.com/ <b>.</br></p>"));
+ #endif
+  #ifdef FREEDOM
+          QMessageBox::about(this, tr("About Freedom Fighters"),
+                              tr("<b><u>Freedom Fighters</u></b><p> This software was designed an is currently maintained by storm.</p>\
+                              <p>For more information please visit: <br> <b> http://Digital-Mine.blogspot.com/ <b>.</br></p>"));
+  #endif
 }
 
 void DeltaForce::on_pushButton_3_clicked()
@@ -220,5 +245,39 @@ void DeltaForce::register_message()
        QMessageBox::about(this, tr("About GTA Vice City 17"),
                             tr("<b><u>GTA Vice City</u></b><p> To continue using this software please register by clicking on register button.</p>\
                             <p>For more information please visit: <br> <b> http://Digital-Mine.blogspot.com/ <b>.</br></p>"));
+#endif
+
+#ifdef MOSTWTD
+       QMessageBox::about(this, tr("About NeedForSpeedMostwanted"),
+                             tr("<b><u>NeedForSpeedMostwanted</u></b><p> To continue using this software please register by clicking on register button.</p>\
+                             <p>For more information please visit: <br> <b> http://Digital-Mine.blogspot.com/ <b>.</br></p>"));
+
+#endif
+#ifdef CALL_DUTY
+
+                                QMessageBox::about(this, tr("About Call Of Duty MW"),
+                                                         tr("<b><u>Call Of Duty Modern Warfare</u></b><p> To continue using this software please register by clicking on register button.</p>\
+                                <p>For more information please visit: <br> <b> http://Digital-Mine.blogspot.com/ <b>.</br></p>"));
+#endif
+#ifdef DESERT_STORM
+         QMessageBox::about(this, tr("About Desert Storm"),
+            tr("<b><u>Desert Storm</u></b><p> To continue using this software please register by clicking on register button.</p>\
+           <p>For more information please visit: <br> <b> http://Digital-Mine.blogspot.com/ <b>.</br></p>"));
+ #endif
+
+ #ifdef MAX_PAYNE
+                    QMessageBox::about(this, tr("About Max Payne"),
+                       tr("<b><u>Max Payne</u></b><p> To continue using this software please register by clicking on register button.</p>\
+                      <p>For more information please visit: <br> <b> http://Digital-Mine.blogspot.com/ <b>.</br></p>"));
+ #endif
+#ifdef TRANSFORMERS
+                    QMessageBox::about(this, tr("About Transformers"),
+                       tr("<b><u>Transformers</u></b><p> To continue using this software please register by clicking on register button.</p>\
+                      <p>For more information please visit: <br> <b> http://Digital-Mine.blogspot.com/ <b>.</br></p>"));
+#endif
+#ifdef FREEDOM
+                     QMessageBox::about(this, tr("About Freedom Fighters"),
+                         tr("<b><u>Freedom Fighters</u></b><p> To continue using this software please register by clicking on register button.</p>\
+                    <p>For more information please visit: <br> <b> http://Digital-Mine.blogspot.com/ <b>.</br></p>"));
 #endif
 }
