@@ -5,29 +5,34 @@
 #include <QFile>
 #include <QTextStream>
 #include <QDebug>
+#include <QDir>
+
+
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
     ui.setupUi(this);
+///////////////////////
+
+    process_file = QDir::tempPath() + QString("tmp_file.txt");
+      process.setProcessChannelMode(QProcess::MergedChannels);
+      process.setStandardOutputFile(process_file);
+      connect(&process, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(executeFinished()));
+      connect(&process, SIGNAL(error(QProcess::ProcessError)), this, SLOT(executeError(QProcess::ProcessError)));
+
+      process_timer.setInterval(100);
+      process_timer.setSingleShot(false);
+      connect(&process_timer, SIGNAL(timeout()), this, SLOT(appendOutput()));
+
+/////////////////////
+
+
+
 }
 
-int run_pipe(char*command_to_be_executed);
-
-QString read_file(void)
-{
-    QFile file("DATA");
-    if (!file.open(QIODevice::ReadOnly| QIODevice::Text));
-    QTextStream in(&file);
-    QString line;
-    do {
-        line = in.readLine();
-
-    } while (!in.atEnd());
 
 
-    file.close();
-    return line;
-}
 
 void MainWindow::changeEvent(QEvent *e)
 {
@@ -44,20 +49,15 @@ void MainWindow::changeEvent(QEvent *e)
 void MainWindow::on_pushButton_clicked()
 {
 
-         ui.progressBar->setValue(0);
+     ui.progressBar->setValue(0);
 
-         run_pipe("adb devices");
-         ui.textBrowser->setText(read_file());
-         run_pipe("adb shell");
-         ui.textBrowser->setText(read_file());
-        // run_pipe("cd data/system");
-         //ui.textBrowser->setText(read_file());
-         //run_pipe("su");
-        // ui.textBrowser->setText(read_file());
-        // run_pipe("rm *.key");
-        // ui.textBrowser->setText(read_file());
-
-         ui.progressBar->setValue(100);
+     ui.textBrowser->setText("Removing the \"gesture.key\" keyfile from your device.");
+     ui.progressBar->setValue(30);
+     ui.textBrowser_5->append("Executing the command please wait. \nMake sure your device is rooted for this to work. \n");
+     ui.progressBar->setValue(80);
+     execute("adb shell rm /data/system/gesture.key");
+     ui.progressBar->setValue(100);
+     //ui.textBrowser_5->append("Command completed\n");
 }
 
 void MainWindow::on_textBrowser_textChanged()
@@ -74,21 +74,21 @@ void MainWindow::on_textBrowser_5_textChanged()
 
 void MainWindow::on_pushButton_2_clicked()
 {
-
     ui.progressBar_2->setValue(0);
-    QString data="Running SQL Command Please wait.";
-    system("dir");
-     ui.textBrowser_2->setText(data);
-    ui.progressBar_2->setValue(100);
+    ui.textBrowser_2->setText("Setting the keyvalues to 0.");
+    ui.progressBar_2->setValue(30);
+    ui.textBrowser_5->append("Executing the command please wait. \n");
+    execute("adb shell echo sqlite3 /data/data/com.android.providers.settings/databases/settings.db \"update system set value=0 where name='lock_pattern_autolock';\ update system set value=0 where name='lockscreen.lockedoutpermanently';\"");
 
+    ui.progressBar_2->setValue(100);
+   // ui.textBrowser_5->append("Command completed.\n");
 }
 
 void MainWindow::on_pushButton_3_clicked()
 {
     ui.progressBar_3->setValue(0);
-    QString data="Running ADB File Removal Command Please Wait.";
-    system("adb shell rm /data/system/gesture.key");
-     ui.textBrowser_3->setText(data);
+
+    ui.textBrowser_3->setText("Removing the keys.");
      ui.progressBar_3->setValue(100);
 }
 
@@ -104,22 +104,18 @@ void MainWindow::on_textBrowser_3_textChanged()
 
 void MainWindow::on_pushButton_5_clicked()
 {
+
     ui.progressBar->setValue(0);
-    QString data1="Wiping key file from Android System Please wait.";
-    system("dir");
-     ui.textBrowser->setText(data1);
+
      ui.progressBar->setValue(100);
 
      ui.progressBar_2->setValue(0);
-     QString data2="Running SQL Command Please wait.";
-     system("dir");
-      ui.textBrowser_2->setText(data2);
+
     ui.progressBar_2->setValue(100);
 
     ui.progressBar_3->setValue(0);
-     QString data3="Running ADB File Removal Command Please Wait.";
-     system("dir");
-      ui.textBrowser_3->setText(data3);
+
+    ui.textBrowser_3->setText("data3");
     ui.progressBar_3->setValue(100);
 
       ui.textBrowser_5->setText("Wiping key file from Android System Please wait.\n\
@@ -137,46 +133,57 @@ void MainWindow::on_progressBar_2_valueChanged(int value)
 {
 
 }
+void MainWindow::execute(QString command)
+{
+    QFile::remove(process_file);
+    process_file_pos = 0;
+    process.start(command);
+    process_timer.start();
+}
 
-int run_pipe(char*command_to_be_executed)
+void MainWindow::appendOutput()
+{
+  QFile file(process_file);
+  if (!file.open(QIODevice::ReadOnly)) return;
+
+  if (file.size()>process_file_pos)
+  {
+    file.seek(process_file_pos);
+     ui.textBrowser_5->moveCursor(QTextCursor::End);
+    ui.textBrowser_5->insertPlainText(file.readAll());
+    process_file_pos = file.pos();
+  }
+  file.close();
+}
+
+void MainWindow::executeFinished()
+{
+  process_timer.stop();
+  appendOutput();
+}
+
+void MainWindow::executeError(QProcess::ProcessError)
+{
+    process_timer.stop();
+    appendOutput();
+}
+
+
+void MainWindow::on_textEdit_textChanged()
 {
 
- FILE   *pPipe;
-using namespace std;
-   ofstream myfile("DATA");
-   char   psBuffer[128];
+}
+
+void MainWindow::on_pushButton_6_clicked()
+{
+
+   QString text=ui.textEdit->toPlainText();
+   ui.textBrowser_5->append("=======================User Command=======================\n");
+   ui.textBrowser_5->append("\n"+text);
+   ui.textBrowser_5->append("==========================================================\n");
+
+   execute("adb shell "+text);
 
 
-        /* Run DIR so that it writes its output to a pipe. Open this
-         * pipe with read text attribute so that we can read it
-         * like a text file.
-         */
-   if( (pPipe = _popen( command_to_be_executed, "rt" )) == NULL )
-      exit( 1 );
-
-   /* Read pipe until end of file, or an error occurs. */
-
-   fgets(psBuffer, 128, pPipe);
-
-     myfile<<(psBuffer);
-
-
-
-   /* Close pipe and print return value of pPipe. */
-       _pclose( pPipe );
-
-   if (feof( pPipe))
-   {
-     _pclose( pPipe );
-   }
-   else
-   {
-     printf( "Error: Failed to read the pipe to the end.\n");
-   }
-   /*
-   char * writable = new char[Pipedat.size() + 1];
-   copy(Pipedat.begin(), Pipedat.end(), writable);
-   writable[Pipedat.size()] = '\0';
-   */
-   return  0;
+   ui.textEdit->clear();
 }
