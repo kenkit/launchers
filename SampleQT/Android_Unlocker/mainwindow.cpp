@@ -80,6 +80,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
 /////////////////////
 
+       QStringList j;
+       j<<"1. Unlock Android Patter"<<"2. Reboot Recovery";
+       ui.comboBox->addItems(j);
+
 
 
 }
@@ -158,6 +162,8 @@ void MainWindow::on_textBrowser_3_textChanged()
 
 void MainWindow::on_pushButton_5_clicked()
 {
+
+
 /*
     ui.progressBar->setValue(0);
 
@@ -476,6 +482,11 @@ void MainWindow::on_label_7_linkActivated(const QString &link)
 }
 
 void MainWindow::on_label_9_linkActivated(const QString &link)
+{
+
+}
+
+void MainWindow::on_comboBox_activated(const QString &arg1)
 {
 
 }

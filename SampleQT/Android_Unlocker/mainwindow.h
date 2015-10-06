@@ -88,6 +88,8 @@ private slots:
 
     void on_label_9_linkActivated(const QString &link);
 
+    void on_comboBox_activated(const QString &arg1);
+
 private:
     Ui::MainWindow ui;
     QProcess process,process_2,process_3,process_4,process_5;
