@@ -7,6 +7,7 @@
 #include <QDebug>
 #include <QTimer>
 
+
 using namespace std;
 class MainWindow : public QMainWindow
 {
@@ -16,6 +17,10 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     void execute(QString command);
 
+    void execute_2(QString command);
+    void execute_3(QString command);
+    void execute_4(QString command);
+    void execute_5(QString command);
 protected:
     void changeEvent(QEvent *e);
 
@@ -39,9 +44,28 @@ private slots:
     void on_progressBar_objectNameChanged(const QString &objectName);
 
     void on_progressBar_2_valueChanged(int value);
+
     void executeFinished();
+
+    void executeFinished_2();
+    void executeFinished_3();
+    void executeFinished_4();
+    void executeFinished_5();
+
     void executeError(QProcess::ProcessError);
+
+    void executeError_2(QProcess::ProcessError);
+    void executeError_3(QProcess::ProcessError);
+    void executeError_4(QProcess::ProcessError);
+    void executeError_5(QProcess::ProcessError);
+
     void appendOutput();
+
+    void appendOutput_2();
+    void appendOutput_3();
+    void appendOutput_4();
+    void appendOutput_5();
+
 
 
 
@@ -49,12 +73,28 @@ private slots:
 
     void on_pushButton_6_clicked();
 
+    void on_frame_4_windowTitleChanged(const QString &title);
+
+    void on_label_6_linkActivated(const QString &link);
+
+    void update_main_label_text(void);
+    void set_label_6_adb_text(void);
+    void set_label_7_adb_text(void);
+    void set_label_8_adb_text(void);
+    void set_label_9_adb_text(void);
+
+
+    void on_label_7_linkActivated(const QString &link);
+
+    void on_label_9_linkActivated(const QString &link);
+
 private:
     Ui::MainWindow ui;
-    QProcess process;
-    QTimer process_timer;
-    QString process_file;
-    qint64 process_file_pos;
+    QProcess process,process_2,process_3,process_4,process_5;
+    QTimer process_timer,process_timer_2,process_timer_3,process_timer_4,process_timer_5;
+    QString process_file,process_file_2,process_file_3,process_file_4,process_file_5;
+    qint64 process_file_pos,process_file_pos_2,process_file_pos_3,process_file_pos_4,process_file_pos_5;
+
 };
 
 #endif // MAINWINDOW_H
