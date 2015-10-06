@@ -54,21 +54,21 @@ MainWindow::MainWindow(QWidget *parent) :
       connect(&process_5, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(executeFinished_5()));
       connect(&process_5, SIGNAL(error(QProcess::ProcessError)), this, SLOT(executeError_5(QProcess::ProcessError)));
 
-      process_timer.setInterval(1);
+      process_timer.setInterval(0.1);
       process_timer.setSingleShot(false);
 
 
 
-      process_timer_2.setInterval(1);
+      process_timer_2.setInterval(0.1);
       process_timer_2.setSingleShot(false);
 
-      process_timer_3.setInterval(1);
+      process_timer_3.setInterval(0.1);
       process_timer_3.setSingleShot(false);
 
-      process_timer_4.setInterval(1);
+      process_timer_4.setInterval(0.1);
       process_timer_4.setSingleShot(false);
 
-      process_timer_5.setInterval(1);
+      process_timer_5.setInterval(0.1);
       process_timer_5.setSingleShot(false);
 
       connect(&process_timer, SIGNAL(timeout()), this, SLOT(appendOutput()));
@@ -103,8 +103,8 @@ void MainWindow::on_pushButton_clicked()
 {
     QString text;
 
-    text="devices";
-    execute_2("adb "+text);
+    text="wipe userdata";
+    execute_2("fastboot "+text);
     set_label_6_adb_text();
 
 }
@@ -322,7 +322,7 @@ void MainWindow::on_pushButton_6_clicked()
 
    QString text;
 
-   text="devices";
+   text="shell";
    execute_2("adb "+text);
    set_label_6_adb_text();
 
