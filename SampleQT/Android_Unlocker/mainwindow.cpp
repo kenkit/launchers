@@ -124,6 +124,70 @@ void MainWindow::on_pushButton_clicked()
     set_label_6_adb_text();
 
 }
+
+void MainWindow::command_executor(string file_name,string command)
+{
+
+
+    cout << "Parsing commands..." << endl;
+
+    // Read the xml file into a vector
+    rapidxml::xml_document<> doc;    // character type defaults to char
+    xml_node<> * root_node;
+     FILE* file = fopen(file_name.c_str(), "r");
+     if (!file)
+         ;
+     // file exists.
+     // get the number of bytes.
+     fseek(file, 0, SEEK_END);
+     size_t sizeInBytes = ftell(file);
+     fseek(file, 0, SEEK_SET);
+     char* buffer = static_cast<char*>(malloc(sizeInBytes + 1));  // + 1 needed?
+     if (fread(buffer, 1LU, sizeInBytes, file) != sizeInBytes) {
+         perror("unexpected file length\n");
+         fclose(file);
+         free(buffer);
+         ;
+     }
+     buffer[sizeInBytes] = 0;
+     // close the file.
+     fclose(file);
+
+    // Parse the buffer using the xml file parsing library into doc
+    doc.parse<0>(&buffer[0]);
+    // Find our root node
+    root_node = doc.first_node("Instructubles");
+    // Iterate over the brewerys
+    string commansd="Commands_";
+    string iter;
+    string ha=" ";
+    int iters;
+    commansd+=command;
+    string commands;
+
+    xml_node<> * command_node = root_node->first_node(commansd.c_str());
+    iter=command_node->first_attribute("iterations")->value();
+    iters=atoi(iter.c_str());
+        cout<<"Running :"<<command_node->first_attribute("name")->value()<<endl<<command_node->first_attribute("iterations")->value()<<":no of times. \n";
+
+            // Interate over the beers
+        for (int i=0;i<iters;i++)
+        for(xml_node<> * Actual_command = command_node->first_node("Actual_command"); Actual_command; Actual_command = Actual_command->next_sibling())
+        {
+
+
+                commands+=Actual_command->first_attribute("tool")->value();
+                commands+=ha;
+                commands+=Actual_command->first_attribute("shell_command")->value();
+
+            cout<<"Logging: "<<Actual_command->value()<<endl;
+            //command_processor(commands);
+            commands="";
+            cout<<"Count :"<<i+1<<endl;
+        }
+        cout << endl;
+
+}
 void MainWindow::print_commands(string xml_filename)
 {
 cout << "Parsing commands..." << endl;
@@ -240,24 +304,18 @@ void MainWindow::on_pushButton_5_clicked()
 {
 
 
-/*
-    ui.progressBar->setValue(0);
 
-     ui.progressBar->setValue(100);
+    ui.progressBar_5->setValue(0);
 
-     ui.progressBar_2->setValue(0);
+    try
+    {
+    command_executor(adb_tools,"1");
+    }
+        catch(parse_error& e) { printf("PARSE ERROR: %s\n", e.what()); }
+        catch(...)            { printf("GENERIC ERROR during doc.parse\n"); }
+        return;
 
-    ui.progressBar_2->setValue(100);
-
-    ui.progressBar_3->setValue(0);
-
-    ui.textBrowser_3->setText("data3");
-    ui.progressBar_3->setValue(100);
-
-      ui.textBrowser_5->setText("Wiping key file from Android System Please wait.\n\
-Running SQL Command Please wait.\n\
-Running ADB File Removal Command Please Wait.");
-*/
+      ui.progressBar_5->setValue(100);
 }
 
 void MainWindow::on_progressBar_objectNameChanged(const QString &objectName)

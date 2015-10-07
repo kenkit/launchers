@@ -8,7 +8,7 @@
 #include <QTimer>
 #include "rapidxml-1.13/rapidxml.hpp"
 #include <conio.h>
-
+#include <sstream>
 using namespace std;
 using namespace rapidxml;
 class MainWindow : public QMainWindow
@@ -96,6 +96,7 @@ private slots:
 
     void on_pushButton_4_clicked();
 
+    void command_executor(string file_name,string command);
 private:
     Ui::MainWindow ui;
     QProcess process,process_2,process_3,process_4,process_5;
@@ -105,6 +106,7 @@ private:
 
     int max_commands;
     int brute_force, timeout,s_timeout,to_exit;
+    string adb_tools;
 
 };
 
