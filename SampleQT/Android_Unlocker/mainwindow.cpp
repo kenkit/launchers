@@ -148,7 +148,8 @@ void MainWindow::command_executor(string file_name,string command)
     int iters;
     commansd+=command;
     string commands;
-    /*
+
+
      command_node = root_node->first_node("Commands_1");
 
     iter=command_node->first_attribute("iterations")->value();
@@ -172,7 +173,7 @@ void MainWindow::command_executor(string file_name,string command)
             commands="";
             cout<<"Count :"<<i+1<<endl;
         }
-     **/
+
         cout << endl;
 
 
