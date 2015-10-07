@@ -31,5 +31,7 @@ OTHER_FILES += \
     myapp.rc
 win32: LIBS +=
 
+win32:RC_FILE += myapp.rc
+
 INCLUDEPATH += \
     ../../../

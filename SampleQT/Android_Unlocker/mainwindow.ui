@@ -36,7 +36,7 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">border-image: url(:/android.jpg);</string>
+     <string notr="true">border-image: url(:/icon.ico);</string>
     </property>
     <property name="frameShape">
      <enum>QFrame::StyledPanel</enum>
@@ -363,6 +363,12 @@
       <width>401</width>
       <height>22</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_5">

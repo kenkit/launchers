@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>android.jpg</file>
         <file>unlocker.jpg</file>
+		<file>icon.ico</file>
     </qresource>
 </RCC>
