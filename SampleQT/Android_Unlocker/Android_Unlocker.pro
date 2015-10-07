@@ -13,9 +13,14 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
 
-HEADERS  += mainwindow.h
+
+HEADERS  += mainwindow.h \
+    ../../../rapidxml-1.13/rapidxml.hpp \
+    ../../../rapidxml-1.13/rapidxml_iterators.hpp \
+    ../../../rapidxml-1.13/rapidxml_print.hpp \
+    ../../../rapidxml-1.13/rapidxml_utils.hpp
 
 FORMS    += mainwindow.ui
 
@@ -25,3 +30,6 @@ RESOURCES += \
 OTHER_FILES += \
     myapp.rc
 win32: LIBS +=
+
+INCLUDEPATH += \
+    ../../../

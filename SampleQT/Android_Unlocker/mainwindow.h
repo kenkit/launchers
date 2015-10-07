@@ -6,9 +6,11 @@
 #include <QProcess>
 #include <QDebug>
 #include <QTimer>
-
+#include "rapidxml-1.13/rapidxml.hpp"
+#include <conio.h>
 
 using namespace std;
+using namespace rapidxml;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -26,6 +28,8 @@ protected:
 
 private slots:
     void on_pushButton_clicked();
+
+    void print_commands(string xml_filename);
 
     void on_textBrowser_textChanged();
 
@@ -90,12 +94,17 @@ private slots:
 
     void on_comboBox_activated(const QString &arg1);
 
+    void on_pushButton_4_clicked();
+
 private:
     Ui::MainWindow ui;
     QProcess process,process_2,process_3,process_4,process_5;
     QTimer process_timer,process_timer_2,process_timer_3,process_timer_4,process_timer_5;
     QString process_file,process_file_2,process_file_3,process_file_4,process_file_5;
     qint64 process_file_pos,process_file_pos_2,process_file_pos_3,process_file_pos_4,process_file_pos_5;
+
+    int max_commands;
+    int brute_force, timeout,s_timeout,to_exit;
 
 };
 

@@ -6,6 +6,7 @@
 #include <QTextStream>
 #include <QDebug>
 #include <QDir>
+#include <windows.h>
 
 
 
@@ -79,10 +80,21 @@ MainWindow::MainWindow(QWidget *parent) :
        connect(&process_timer_5, SIGNAL(timeout()), this, SLOT(appendOutput_5()));
 
 /////////////////////
+       max_commands=0; brute_force=100; timeout=4000;s_timeout=300;to_exit=0;
 
-       QStringList j;
-       j<<"1. Unlock Android Patter"<<"2. Reboot Recovery";
-       ui.comboBox->addItems(j);
+      /*
+       QString k;
+       char buffer[10];
+       for(int i=1;i<10;i++)
+       {
+
+          string adds=itoa (i,buffer,10);
+
+           ui.comboBox->addItem(k.fromStdString(adds)+".Items");
+
+       }
+    */
+
 
 
 
@@ -107,12 +119,81 @@ void MainWindow::on_pushButton_clicked()
 {
     QString text;
 
-    text="wipe userdata";
-    execute_2("fastboot "+text);
+    text="shell check root";
+    execute_2("adb "+text);
     set_label_6_adb_text();
 
 }
+void MainWindow::print_commands(string xml_filename)
+{
+cout << "Parsing commands..." << endl;
+    xml_document<> doc;
+    xml_node<> * root_node;
+    // Read the xml file into a vector
+    ifstream theFile (xml_filename.c_str());
+   cout<<"Read the xml file into a vector"<<endl;
 
+    vector<char> buffer((istreambuf_iterator<char>(theFile)), istreambuf_iterator<char>());
+    buffer.push_back('\0');
+     cout<<"Parse the buffer using the xml file parsing library into doc"<<endl;
+    doc.parse<0>(&buffer[0]);
+    cout<< "Find our root node"<<endl;
+    root_node = doc.first_node("Instructubles");
+
+    string iter=root_node->first_attribute("no_of_commands")->value();
+    cout<<"Max commands"<<iter<<endl;
+    //cout<<"No of commands available :"<<iter<<endl;
+
+    //cout<<"Here are the available commands.\n\n";
+    // Iterate over the brewerys
+    int iters=atoi(iter.c_str());
+    max_commands=iters;
+    cout<<"Max commands"<<max_commands<<endl;
+    for (int i=1; i!=iters+1;i++)
+    {
+
+        char buffer [33];
+        string adds=itoa (i,buffer,10);
+        string commands="Commands_";
+        commands+=adds;
+        xml_node<> * command_node = root_node->first_node(commands.c_str());
+       QString k,l;
+
+
+       QString no=(command_node->first_attribute("no")->value());
+       QString command=command_node->first_attribute("name")->value();
+
+      // cout<<command_node->first_attribute("no")->value()<<command_node->first_attribute("name")->value()<<endl;
+       ui.comboBox->InsertAfterCurrent;
+
+
+        if (1)
+          ui.comboBox->addItem(no+"."+command);
+        else
+            ui.comboBox->addItem("No commands.");
+
+
+
+
+
+
+            //command_node->first_attribute("iterations")->value());
+            // Interate over the beers
+        /***
+        for(xml_node<> * Actual_command = command_node->first_node("Actual_command"); Actual_command; Actual_command = Actual_command->next_sibling())
+        {
+            printf("Using  %s to run %s. \n\n",
+                Actual_command->first_attribute("tool")->value(),
+                Actual_command->first_attribute("shell_command")->value());
+            printf("Logging: %s\n", Actual_command->value());
+        }
+        **/
+        //cout << endl;
+    }
+    //cout<<max_commands+1<<".Back.\n";
+    //to_exit=max_commands+1;
+
+}
 void MainWindow::on_textBrowser_textChanged()
 {
 
@@ -127,27 +208,22 @@ void MainWindow::on_textBrowser_5_textChanged()
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    /*
-    ui.progressBar_2->setValue(0);
-    ui.textBrowser_2->setText("Setting the keyvalues to 0.");
-    ui.progressBar_2->setValue(30);
-    ui.textBrowser_5->append("Executing the command please wait. \n");
-    execute("adb shell echo sqlite3 /data/data/com.android.providers.settings/databases/settings.db \"update system set value=0 where name='lock_pattern_autolock';\ update system set value=0 where name='lockscreen.lockedoutpermanently';\"");
+ui.textBrowser_5->insertPlainText("\nStarting adb server.");
+execute("adb start-server");
+ui.textBrowser_5->moveCursor(QTextCursor::End);
 
-    ui.progressBar_2->setValue(100);
 
-    */
-   // ui.textBrowser_5->append("Command completed.\n");
 }
 
 void MainWindow::on_pushButton_3_clicked()
 {
-    /*
-    ui.progressBar_3->setValue(0);
 
-    ui.textBrowser_3->setText("Removing the keys.");
-     ui.progressBar_3->setValue(100);
-     */
+ execute("adb root");
+ ui.textBrowser_5->insertPlainText("\nStarting adb as root.\n");
+ ui.textBrowser_5->moveCursor(QTextCursor::End);
+
+
+
 }
 
 void MainWindow::on_textBrowser_2_textChanged()
@@ -234,6 +310,7 @@ void MainWindow::appendOutput()
 {
 
   update_main_label_text();
+  ui.textBrowser_5->moveCursor(QTextCursor::End);
 
 
 }
@@ -327,26 +404,28 @@ void MainWindow::on_pushButton_6_clicked()
 {
 
    QString text;
-
-   text="shell";
+   print_commands("adb_tools.xml");
+   text="shell getprop ro.product.device.name";
    execute_2("adb "+text);
    set_label_6_adb_text();
+   //RETREIVE DEVICE NAME
 
 
-
-   text="devices";
+   text="shell getprop ro.product.device.name";
    execute_3("adb "+text);
    set_label_7_adb_text();
+   //RETRIEVE ANDROID VERSION
 
 
-   text="localhost";
+   text="shell cat";
    execute_4("adb "+text);
    set_label_8_adb_text();
+   //ROOT STATUS
 
-   text="devices";
-   execute_5("ping "+text);
+   text="shell cat bat";
+   execute_5("adb "+text);
    set_label_9_adb_text();
-
+   //BATTERY STATUS
 
 
 
@@ -376,8 +455,11 @@ void MainWindow::set_label_6_adb_text(void)
       data=file.readLine();
       if(data.contains("error: device not found"))
         ui.label_6->setText("No device.");\
-      else
-           ui.label_6->setText(data);
+      else if(data.contains("not running"))
+           ui.label_6->setText("Please Start adb server.");
+       else
+          ui.label_6->setText(data);
+
       process_file_pos_2 = file.pos();
     }
 
@@ -400,6 +482,8 @@ void MainWindow::set_label_7_adb_text()
       data=file.readLine();
       if(data.contains("error: device not found"))
         ui.label_7->setText("No device.");\
+      else if(data.contains("not running"))
+           ui.label_7->setText("Please Start adb server.");
       else
            ui.label_7->setText(data);
       process_file_pos_3 = file.pos();
@@ -425,6 +509,8 @@ void MainWindow::set_label_8_adb_text()
       data=file.readLine();
       if(data.contains("error: device not found"))
         ui.label_8->setText("No device.");\
+      else if(data.contains("not running"))
+           ui.label_8->setText("Please Start adb server.");
       else
            ui.label_8->setText(data);
       process_file_pos_4 = file.pos();
@@ -449,6 +535,8 @@ void MainWindow::set_label_9_adb_text()
       data=file.readLine();
       if(data.contains("error: device not found"))
         ui.label_9->setText("No device.");\
+      else if(data.contains("not running"))
+           ui.label_9->setText("Please Start adb server.");
       else
            ui.label_9->setText(data);
       process_file_pos_5 = file.pos();
@@ -489,4 +577,11 @@ void MainWindow::on_label_9_linkActivated(const QString &link)
 void MainWindow::on_comboBox_activated(const QString &arg1)
 {
 
+}
+
+void MainWindow::on_pushButton_4_clicked()
+{
+    ui.textBrowser_5->insertPlainText("\nKilling adb Server.");
+    execute("adb kill-server");
+    ui.textBrowser_5->moveCursor(QTextCursor::End);
 }
