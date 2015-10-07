@@ -128,31 +128,15 @@ void MainWindow::on_pushButton_clicked()
 void MainWindow::command_executor(string file_name,string command)
 {
 
-
     cout << "Parsing commands..." << endl;
-
+    xml_document<> doc;
+    xml_node<> * root_node,* command_node;
     // Read the xml file into a vector
-    rapidxml::xml_document<> doc;    // character type defaults to char
-    xml_node<> * root_node;
-     FILE* file = fopen(file_name.c_str(), "r");
-     if (!file)
-         ;
-     // file exists.
-     // get the number of bytes.
-     fseek(file, 0, SEEK_END);
-     size_t sizeInBytes = ftell(file);
-     fseek(file, 0, SEEK_SET);
-     char* buffer = static_cast<char*>(malloc(sizeInBytes + 1));  // + 1 needed?
-     if (fread(buffer, 1LU, sizeInBytes, file) != sizeInBytes) {
-         perror("unexpected file length\n");
-         fclose(file);
-         free(buffer);
-         ;
-     }
-     buffer[sizeInBytes] = 0;
-     // close the file.
-     fclose(file);
-
+    ifstream theFile (file_name.c_str());
+    cout<<file_name.c_str()<<endl;
+    vector<char> buffer((istreambuf_iterator<char>(theFile)), istreambuf_iterator<char>());
+    buffer.push_back('\0');
+    theFile.close();
     // Parse the buffer using the xml file parsing library into doc
     doc.parse<0>(&buffer[0]);
     // Find our root node
@@ -164,10 +148,13 @@ void MainWindow::command_executor(string file_name,string command)
     int iters;
     commansd+=command;
     string commands;
+    /*
+     command_node = root_node->first_node("Commands_1");
 
-    xml_node<> * command_node = root_node->first_node(commansd.c_str());
     iter=command_node->first_attribute("iterations")->value();
+
     iters=atoi(iter.c_str());
+
         cout<<"Running :"<<command_node->first_attribute("name")->value()<<endl<<command_node->first_attribute("iterations")->value()<<":no of times. \n";
 
             // Interate over the beers
@@ -185,7 +172,9 @@ void MainWindow::command_executor(string file_name,string command)
             commands="";
             cout<<"Count :"<<i+1<<endl;
         }
+     **/
         cout << endl;
+
 
 }
 void MainWindow::print_commands(string xml_filename)
@@ -463,13 +452,13 @@ void MainWindow::on_pushButton_6_clicked()
 
    QString text;
    print_commands("adb_tools.xml");
-   text="shell getprop ro.product.device.name";
+   text="shell getprop ro.product.model";
    execute_2("adb "+text);
    set_label_6_adb_text();
    //RETREIVE DEVICE NAME
 
 
-   text="shell getprop ro.product.device.name";
+   text="shell getgrop ro.build.version.release";
    execute_3("adb "+text);
    set_label_7_adb_text();
    //RETRIEVE ANDROID VERSION
