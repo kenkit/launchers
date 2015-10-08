@@ -110,6 +110,7 @@ private:
     int max_commands;
     int brute_force, timeout,s_timeout,to_exit;
     string adb_tools;
+    bool killed;
 
 };
 

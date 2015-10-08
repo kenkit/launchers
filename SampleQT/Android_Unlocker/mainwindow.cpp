@@ -104,6 +104,7 @@ MainWindow::MainWindow(QWidget *parent) :
     */
 
 adb_tools="adb_tools.xml";
+killed=false;
 //refresh();
 
 }
@@ -289,6 +290,7 @@ void MainWindow::on_pushButton_2_clicked()
 ui.textBrowser_5->insertPlainText("\nStarting adb server.");
 execute("adb start-server");
 ui.textBrowser_5->moveCursor(QTextCursor::End);
+killed=false;
 
 
 }
@@ -496,12 +498,18 @@ void MainWindow::set_label_6_adb_text(void)
       file.seek(0);
       data=file.readLine();
       if(data.contains("error: device not found"))
-        ui.label_6->setText("No device.");\
+        {
+          ui.label_6->setText("No device.");\
+
+      }
       else if(data.contains("not running"))
            ui.label_6->setText("Please Start adb server.");
        else
       {
           ui.label_6->setText(data);
+
+          ui.textBrowser_5->insertPlainText("Found: "+data+'\n');
+          ui.textBrowser_5->moveCursor(QTextCursor::End);
       }
 
       process_file_pos_2 = file.pos();
@@ -628,9 +636,13 @@ void MainWindow::on_pushButton_4_clicked()
     ui.textBrowser_5->insertPlainText("\nKilling adb Server.");
     execute("adb kill-server");
     ui.textBrowser_5->moveCursor(QTextCursor::End);
+    killed=true;
 }
 void MainWindow::refresh(void)
 {
+    if(!killed)
+  {
+    //ui.textBrowser_5->insertPlainText("Checking for devices. \n");
     QString text;
     print_commands(adb_tools);
     text="shell getprop ro.product.model";
@@ -654,7 +666,7 @@ void MainWindow::refresh(void)
     execute_5("adb "+text);
     set_label_9_adb_text();
     //BATTERY STATUS
-
+}
 
 
 }
