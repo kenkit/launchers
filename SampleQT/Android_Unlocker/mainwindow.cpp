@@ -510,6 +510,7 @@ void MainWindow::set_label_6_adb_text(void)
 
           ui.textBrowser_5->insertPlainText("Found: "+data+'\n');
           ui.textBrowser_5->moveCursor(QTextCursor::End);
+          killed=true;
       }
 
       process_file_pos_2 = file.pos();
@@ -538,6 +539,8 @@ void MainWindow::set_label_7_adb_text()
            ui.label_7->setText("Please Start adb server.");
       else
            ui.label_7->setText(data);
+
+
       process_file_pos_3 = file.pos();
     }
 
@@ -654,7 +657,7 @@ void MainWindow::refresh(void)
     //RETREIVE DEVICE NAME
 
 
-    text="shell getgrop ro.build.version.release";
+    text="shell getprop ro.build.version.release ";
     execute_3("adb "+text);
     set_label_7_adb_text();
     //RETRIEVE ANDROID VERSION
@@ -665,7 +668,7 @@ void MainWindow::refresh(void)
     set_label_8_adb_text();
     //ROOT STATUS
 
-    text="shell cat bat";
+    text="shell getprop ro.build.version.sdk ";
     execute_5("adb "+text);
     set_label_9_adb_text();
     //BATTERY STATUS

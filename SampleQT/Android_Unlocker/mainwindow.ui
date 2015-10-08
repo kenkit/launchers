@@ -209,7 +209,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>      Battery status:</string>
+       <string>          Sdk Version</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_6">
@@ -225,7 +225,7 @@
        <font>
         <pointsize>11</pointsize>
         <weight>75</weight>
-        <italic>true</italic>
+        <italic>false</italic>
         <bold>true</bold>
        </font>
       </property>
@@ -249,7 +249,7 @@
        <font>
         <pointsize>11</pointsize>
         <weight>75</weight>
-        <italic>true</italic>
+        <italic>false</italic>
         <bold>true</bold>
        </font>
       </property>
@@ -273,7 +273,7 @@
        <font>
         <pointsize>11</pointsize>
         <weight>75</weight>
-        <italic>true</italic>
+        <italic>false</italic>
         <bold>true</bold>
        </font>
       </property>
@@ -297,7 +297,7 @@
        <font>
         <pointsize>11</pointsize>
         <weight>75</weight>
-        <italic>true</italic>
+        <italic>false</italic>
         <bold>true</bold>
        </font>
       </property>
