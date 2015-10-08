@@ -3,5 +3,8 @@
         <file>android.jpg</file>
         <file>unlocker.jpg</file>
 		<file>icon.ico</file>
+		<file>images/bad.svg</file>
+		<file>images/heart.svg</file>
+		<file>images/trash.svg</file>
     </qresource>
 </RCC>

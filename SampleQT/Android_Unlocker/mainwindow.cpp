@@ -13,7 +13,11 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
+
+
+
     ui.setupUi(this);
+
 ///////////////////////
 
     process_file = QDir::tempPath() + QString("tmp_file.txt");
@@ -82,6 +86,10 @@ MainWindow::MainWindow(QWidget *parent) :
 /////////////////////
        max_commands=0; brute_force=100; timeout=4000;s_timeout=300;to_exit=0;
 
+       QTimer *timer = new QTimer(this);
+           connect(timer, SIGNAL(timeout()), this, SLOT(refresh()));
+           timer->start(1000); //time specified in ms
+
       /*
        QString k;
        char buffer[10];
@@ -96,7 +104,7 @@ MainWindow::MainWindow(QWidget *parent) :
     */
 
 adb_tools="adb_tools.xml";
-
+//refresh();
 
 }
 
@@ -161,7 +169,11 @@ void MainWindow::command_executor(string file_name,int commands_no_run)
         cout<<"Running :"<<command_node->first_attribute("name")->value()<<endl<<command_node->first_attribute("iterations")->value()<<":no of times. \n";
 
             // Interate over the beers
+
         for (int i=0;i<iters;i++)
+        {
+          ui.progressBar_5->setValue(0);
+
         for(xml_node<> * Actual_command = command_node->first_node("Actual_command"); Actual_command; Actual_command = Actual_command->next_sibling())
         {
 
@@ -176,9 +188,14 @@ void MainWindow::command_executor(string file_name,int commands_no_run)
             execute(k.fromStdString(commands));
             commands="";
             cout<<"Count :"<<i+1<<endl;
+
+        }
+        ui.progressBar_5->setValue(100);
         }
 
         cout << endl;
+
+
 
 
 }
@@ -299,12 +316,12 @@ void MainWindow::on_pushButton_5_clicked()
 
 
 
-    ui.progressBar_5->setValue(0);
+
 
     command_executor(adb_tools,ui.comboBox->currentIndex());
 
 
-      ui.progressBar_5->setValue(100);
+
 }
 
 void MainWindow::on_progressBar_objectNameChanged(const QString &objectName)
@@ -450,32 +467,7 @@ void MainWindow::on_textEdit_textChanged()
 void MainWindow::on_pushButton_6_clicked()
 {
 
-   QString text;
-   print_commands(adb_tools);
-   text="shell getprop ro.product.model";
-   execute_2("adb "+text);
-   set_label_6_adb_text();
-   //RETREIVE DEVICE NAME
-
-
-   text="shell getgrop ro.build.version.release";
-   execute_3("adb "+text);
-   set_label_7_adb_text();
-   //RETRIEVE ANDROID VERSION
-
-
-   text="shell cat";
-   execute_4("adb "+text);
-   set_label_8_adb_text();
-   //ROOT STATUS
-
-   text="shell cat bat";
-   execute_5("adb "+text);
-   set_label_9_adb_text();
-   //BATTERY STATUS
-
-
-
+refresh();
 
 
 }
@@ -505,7 +497,9 @@ void MainWindow::set_label_6_adb_text(void)
       else if(data.contains("not running"))
            ui.label_6->setText("Please Start adb server.");
        else
+      {
           ui.label_6->setText(data);
+      }
 
       process_file_pos_2 = file.pos();
     }
@@ -632,3 +626,38 @@ void MainWindow::on_pushButton_4_clicked()
     execute("adb kill-server");
     ui.textBrowser_5->moveCursor(QTextCursor::End);
 }
+void MainWindow::refresh(void)
+{
+    QString text;
+    print_commands(adb_tools);
+    text="shell getprop ro.product.model";
+    execute_2("adb "+text);
+    set_label_6_adb_text();
+    //RETREIVE DEVICE NAME
+
+
+    text="shell getgrop ro.build.version.release";
+    execute_3("adb "+text);
+    set_label_7_adb_text();
+    //RETRIEVE ANDROID VERSION
+
+
+    text="shell cat";
+    execute_4("adb "+text);
+    set_label_8_adb_text();
+    //ROOT STATUS
+
+    text="shell cat bat";
+    execute_5("adb "+text);
+    set_label_9_adb_text();
+    //BATTERY STATUS
+
+
+
+}
+
+void MainWindow::on_pushButton_7_clicked()
+{
+    process.close();
+}
+

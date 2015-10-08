@@ -97,6 +97,9 @@ private slots:
     void on_pushButton_4_clicked();
 
     void command_executor(string file_name,int commands_no_run);
+    void refresh(void);
+    void on_pushButton_7_clicked();
+
 private:
     Ui::MainWindow ui;
     QProcess process,process_2,process_3,process_4,process_5;
