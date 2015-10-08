@@ -471,7 +471,7 @@ void MainWindow::on_textEdit_textChanged()
 
 void MainWindow::on_pushButton_6_clicked()
 {
-
+killed=false;
 refresh();
 
 
@@ -636,6 +636,9 @@ void MainWindow::on_pushButton_4_clicked()
     ui.textBrowser_5->insertPlainText("\nKilling adb Server.");
     execute("adb kill-server");
     ui.textBrowser_5->moveCursor(QTextCursor::End);
+    ui.textBrowser_5->insertPlainText("\nSuccessfully killed adb server.");
+    ui.textBrowser_5->moveCursor(QTextCursor::End);
+
     killed=true;
 }
 void MainWindow::refresh(void)
