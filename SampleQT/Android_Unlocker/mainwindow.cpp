@@ -95,7 +95,7 @@ MainWindow::MainWindow(QWidget *parent) :
        }
     */
 
-
+adb_tools="adb_tools.xml";
 
 
 }
@@ -125,12 +125,16 @@ void MainWindow::on_pushButton_clicked()
 
 }
 
-void MainWindow::command_executor(string file_name,string command)
+void MainWindow::command_executor(string file_name,int commands_no_run)
 {
+    char buffer_2 [33];
+
+    string command=itoa(commands_no_run+1,buffer_2,10);
 
     cout << "Parsing commands..." << endl;
+
     xml_document<> doc;
-    xml_node<> * root_node,* command_node;
+    xml_node<> * root_node;
     // Read the xml file into a vector
     ifstream theFile (file_name.c_str());
     cout<<file_name.c_str()<<endl;
@@ -149,9 +153,7 @@ void MainWindow::command_executor(string file_name,string command)
     commansd+=command;
     string commands;
 
-
-     command_node = root_node->first_node("Commands_1");
-
+    xml_node<> * command_node = root_node->first_node(commansd.c_str());
     iter=command_node->first_attribute("iterations")->value();
 
     iters=atoi(iter.c_str());
@@ -170,6 +172,8 @@ void MainWindow::command_executor(string file_name,string command)
 
             cout<<"Logging: "<<Actual_command->value()<<endl;
             //command_processor(commands);
+            QString k;
+            execute(k.fromStdString(commands));
             commands="";
             cout<<"Count :"<<i+1<<endl;
         }
@@ -297,13 +301,8 @@ void MainWindow::on_pushButton_5_clicked()
 
     ui.progressBar_5->setValue(0);
 
-    try
-    {
-    command_executor(adb_tools,"1");
-    }
-        catch(parse_error& e) { printf("PARSE ERROR: %s\n", e.what()); }
-        catch(...)            { printf("GENERIC ERROR during doc.parse\n"); }
-        return;
+    command_executor(adb_tools,ui.comboBox->currentIndex());
+
 
       ui.progressBar_5->setValue(100);
 }
@@ -452,7 +451,7 @@ void MainWindow::on_pushButton_6_clicked()
 {
 
    QString text;
-   print_commands("adb_tools.xml");
+   print_commands(adb_tools);
    text="shell getprop ro.product.model";
    execute_2("adb "+text);
    set_label_6_adb_text();

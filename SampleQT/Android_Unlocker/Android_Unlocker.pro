@@ -17,10 +17,7 @@ SOURCES += main.cpp\
 
 
 HEADERS  += mainwindow.h \
-    ../../../rapidxml-1.13/rapidxml.hpp \
-    ../../../rapidxml-1.13/rapidxml_iterators.hpp \
-    ../../../rapidxml-1.13/rapidxml_print.hpp \
-    ../../../rapidxml-1.13/rapidxml_utils.hpp
+
 
 FORMS    += mainwindow.ui
 
