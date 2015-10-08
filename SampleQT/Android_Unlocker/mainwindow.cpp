@@ -82,6 +82,7 @@ MainWindow::MainWindow(QWidget *parent) :
        connect(&process_timer_3, SIGNAL(timeout()), this, SLOT(appendOutput_3()));
        connect(&process_timer_4, SIGNAL(timeout()), this, SLOT(appendOutput_4()));
        connect(&process_timer_5, SIGNAL(timeout()), this, SLOT(appendOutput_5()));
+       connect(ui.comboBox_2, SIGNAL(activated(int)), this, SLOT(combochanged(int)));
 
 /////////////////////
        max_commands=0; brute_force=100; timeout=4000;s_timeout=300;to_exit=0;
@@ -107,7 +108,7 @@ adb_tools="adb_tools.xml";
 menu_file="items.xml";
 
 killed=false;
-print_commands(adb_tools);
+
 display_initial_entry(menu_file);
 //refresh();
 
@@ -716,9 +717,6 @@ cout << "Parsing commands..." << endl;
         string commands="acvite_item_";
         commands+=adds;
         xml_node<> * command_node = root_node->first_node(commands.c_str());
-        Sleep(s_timeout);
-
-
 
 
 
@@ -746,5 +744,60 @@ cout << "Parsing commands..." << endl;
         **/
         //cout << endl;
     }
+
 //	cout<<iters+1<<". Exit"<<endl;
+}
+
+
+void MainWindow::select_from_initial_entry(string menu_file,int item_no)
+{
+    char buffer_2 [33];
+    string menu_item_no=itoa (item_no,buffer_2,10);
+
+
+
+
+
+    cout << "Parsing commands..." << endl;
+    xml_document<> doc;
+    xml_node<> * root_node;
+    // Read the xml file into a vector
+    ifstream theFile (menu_file.c_str());
+    vector<char> buffer((istreambuf_iterator<char>(theFile)), istreambuf_iterator<char>());
+    buffer.push_back('\0');
+    // Parse the buffer using the xml file parsing library into doc
+    doc.parse<0>(&buffer[0]);
+    // Find our root node
+    root_node = doc.first_node("Instructubles");
+    // Iterate over the brewerys
+    string commansd="acvite_item_";
+    string iter;
+    int iters;
+    commansd+=menu_item_no;
+    string commands,choice;
+
+    xml_node<> * command_node = root_node->first_node(commansd.c_str());
+    //iter=command_node->first_attribute("no_of_items")->value();
+    //iters=atoi(iter.c_str());
+
+        print_commands(command_node->first_attribute("file")->value());
+
+
+
+        //cout << endl;
+
+
+
+
+}
+
+void MainWindow::on_comboBox_2_currentIndexChanged(const QString &arg1)
+{
+    //select_from_initial_entry( menu_file,ui.comboBox_2->currentIndex());
+}
+
+void MainWindow::combochanged(int index)
+{
+    ui.comboBox->clear();
+    select_from_initial_entry( menu_file,index+1);
 }

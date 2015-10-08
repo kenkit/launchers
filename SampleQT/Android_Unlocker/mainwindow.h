@@ -100,6 +100,9 @@ private slots:
     void refresh(void);
     void on_pushButton_7_clicked();
     void display_initial_entry(string menu_file);
+    void select_from_initial_entry(string menu_file,int item_no);
+    void combochanged(int index);
+    void on_comboBox_2_currentIndexChanged(const QString &arg1);
 
 private:
     Ui::MainWindow ui;
