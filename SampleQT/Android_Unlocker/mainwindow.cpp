@@ -7,7 +7,7 @@
 #include <QDebug>
 #include <QDir>
 #include <windows.h>
-
+#include <QtCore/qcoreevent.h>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -184,6 +184,9 @@ void MainWindow::command_executor(string file_name,int commands_no_run)
 
             cout<<"Logging: "<<Actual_command->value()<<endl;
             //command_processor(commands);
+
+            ui.textBrowser_5->insertPlainText(Actual_command->value());
+            ui.textBrowser_5->insertPlainText("\n");
             QString k;
             execute(k.fromStdString(commands));
             commands="";
@@ -599,7 +602,7 @@ void MainWindow::update_main_label_text()
     {
       file.seek(0);
        ui.textBrowser_5->moveCursor(QTextCursor::End);
-      ui.textBrowser_5->insertPlainText(file.readAll());
+      ui.textBrowser_5->insertPlainText(file.readAll()+'\n');
       process_file_pos = file.pos();
     }
     file.close();
