@@ -99,6 +99,7 @@ private slots:
     void command_executor(string file_name,int commands_no_run);
     void refresh(void);
     void on_pushButton_7_clicked();
+    void display_initial_entry(string menu_file);
 
 private:
     Ui::MainWindow ui;
@@ -109,7 +110,7 @@ private:
 
     int max_commands;
     int brute_force, timeout,s_timeout,to_exit;
-    string adb_tools;
+    string adb_tools,menu_file;
     bool killed;
 
 };

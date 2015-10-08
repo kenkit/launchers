@@ -104,7 +104,11 @@ MainWindow::MainWindow(QWidget *parent) :
     */
 
 adb_tools="adb_tools.xml";
+menu_file="items.xml";
+
 killed=false;
+print_commands(adb_tools);
+display_initial_entry(menu_file);
 //refresh();
 
 }
@@ -650,7 +654,7 @@ void MainWindow::refresh(void)
   {
     //ui.textBrowser_5->insertPlainText("Checking for devices. \n");
     QString text;
-    print_commands(adb_tools);
+
     text="shell getprop ro.product.model";
     execute_2("adb "+text);
     set_label_6_adb_text();
@@ -682,3 +686,65 @@ void MainWindow::on_pushButton_7_clicked()
     process.close();
 }
 
+void MainWindow::display_initial_entry(string menu_file)
+{
+cout << "Parsing commands..." << endl;
+    xml_document<> doc;
+    xml_node<> * root_node;
+    // Read the xml file into a vector
+    ifstream theFile (menu_file.c_str());
+    vector<char> buffer((istreambuf_iterator<char>(theFile)), istreambuf_iterator<char>());
+    buffer.push_back('\0');
+    // Parse the buffer using the xml file parsing library into doc
+    doc.parse<0>(&buffer[0]);
+    // Find our root node
+    root_node = doc.first_node("Instructubles");
+
+    string iter=root_node->first_attribute("no_of_items")->value();
+
+    cout<<"No of commands available :"<<iter<<endl;
+
+    printf("Here are the available commands.\n\n");
+    // Iterate over the brewerys
+    int iters=atoi(iter.c_str());
+    max_commands=iters;
+    for (int i=1; i!=iters+1;i++)
+    {
+
+        char buffer [33];
+        string adds=itoa (i,buffer,10);
+        string commands="acvite_item_";
+        commands+=adds;
+        xml_node<> * command_node = root_node->first_node(commands.c_str());
+        Sleep(s_timeout);
+
+
+
+
+
+        QString no=command_node->first_attribute("no")->value();
+        QString command=command_node->first_attribute("item_name")->value();
+
+       // cout<<command_node->first_attribute("no")->value()<<command_node->first_attribute("name")->value()<<endl;
+        ui.comboBox->InsertAfterCurrent;
+
+
+         if (1)
+           ui.comboBox_2->addItem(no+"."+command);
+         else
+             ui.comboBox_2->addItem("No commands.");
+            //command_node->first_attribute("iterations")->value());
+            // Interate over the beers
+        /***
+        for(xml_node<> * Actual_command = command_node->first_node("Actual_command"); Actual_command; Actual_command = Actual_command->next_sibling())
+        {
+            printf("Using  %s to run %s. \n\n",
+                Actual_command->first_attribute("tool")->value(),
+                Actual_command->first_attribute("shell_command")->value());
+            printf("Logging: %s\n", Actual_command->value());
+        }
+        **/
+        //cout << endl;
+    }
+//	cout<<iters+1<<". Exit"<<endl;
+}
