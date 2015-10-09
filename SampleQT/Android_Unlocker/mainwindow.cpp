@@ -572,8 +572,12 @@ void MainWindow::set_label_8_adb_text()
         ui.label_8->setText("No device.");\
       else if(data.contains("not running"))
            ui.label_8->setText("Please Start adb server.");
-      else
-           ui.label_8->setText(data);
+      else if (data.contains("(root)"))
+           ui.label_8->setText("Yes");
+      else if (data.contains("su: permission denied"))
+           ui.label_8->setText("No");
+
+
       process_file_pos_4 = file.pos();
     }
 
@@ -669,7 +673,7 @@ void MainWindow::refresh(void)
     //RETRIEVE ANDROID VERSION
 
 
-    text="shell cat";
+    text="shell \"su -c id\"";
     execute_4("adb "+text);
     set_label_8_adb_text();
     //ROOT STATUS
