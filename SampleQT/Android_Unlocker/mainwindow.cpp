@@ -133,10 +133,10 @@ void MainWindow::changeEvent(QEvent *e)
 void MainWindow::on_pushButton_clicked()
 {
     QString text;
-
-    text="shell check root";
-    execute_2("adb "+text);
-    set_label_6_adb_text();
+    text="shell \"su -c id\"";
+    execute_4("adb "+text);
+    set_label_8_adb_text();
+    //ROOT STATUS
 
 }
 
