@@ -568,7 +568,7 @@ void MainWindow::set_label_8_adb_text()
     {
       file.seek(0);
       data=file.readLine();
-      if(data.contains("error: device not found"))
+      if(data.contains("device not found"))
         ui.label_8->setText("No device.");\
       else if(data.contains("not running"))
            ui.label_8->setText("Please Start adb server.");
@@ -576,6 +576,10 @@ void MainWindow::set_label_8_adb_text()
            ui.label_8->setText("Yes");
       else if (data.contains("su: permission denied"))
            ui.label_8->setText("No");
+      else if (data.contains("offline"))
+           ui.label_8->setText(data);
+       else if (data.contains("sh: su: not found"))
+          ui.label_8->setText("No");
 
 
       process_file_pos_4 = file.pos();

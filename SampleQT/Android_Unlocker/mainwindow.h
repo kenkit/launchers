@@ -23,6 +23,9 @@ public:
     void execute_3(QString command);
     void execute_4(QString command);
     void execute_5(QString command);
+
+    void select_initial_combo_entry(string menu_file,int selected);
+    string sellected_menu_entry;
 protected:
     void changeEvent(QEvent *e);
 
