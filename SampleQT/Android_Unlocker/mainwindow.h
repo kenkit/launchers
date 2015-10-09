@@ -25,6 +25,7 @@ public:
     void execute_5(QString command);
 
     void select_initial_combo_entry(string menu_file,int selected);
+    void get_menu_initial_entry(string menu_file,int item_no);
     string sellected_menu_entry;
 protected:
     void changeEvent(QEvent *e);
