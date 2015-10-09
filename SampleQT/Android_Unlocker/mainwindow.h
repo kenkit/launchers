@@ -107,6 +107,7 @@ private slots:
     void select_from_initial_entry(string menu_file,int item_no);
     void combochanged(int index);
     void on_comboBox_2_currentIndexChanged(const QString &arg1);
+    void combo_2_changed(int index);
 
 private:
     Ui::MainWindow ui;

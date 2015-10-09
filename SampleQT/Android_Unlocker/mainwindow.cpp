@@ -83,6 +83,8 @@ MainWindow::MainWindow(QWidget *parent) :
        connect(&process_timer_4, SIGNAL(timeout()), this, SLOT(appendOutput_4()));
        connect(&process_timer_5, SIGNAL(timeout()), this, SLOT(appendOutput_5()));
        connect(ui.comboBox_2, SIGNAL(activated(int)), this, SLOT(combochanged(int)));
+       connect(ui.comboBox, SIGNAL(activated(int)), this, SLOT(combo_2_changed(int)));
+
 
 /////////////////////
        max_commands=0; brute_force=100; timeout=4000;s_timeout=300;to_exit=0;
@@ -176,15 +178,15 @@ void MainWindow::command_executor(string file_name,int commands_no_run)
         cout<<"Running :"<<command_node->first_attribute("name")->value()<<endl<<command_node->first_attribute("iterations")->value()<<":no of times. \n";
 
             // Interate over the beers
+      ui.progressBar_5->setRange(0,iters+1);
 
-        for (int i=0;i<iters;i++)
-        {
-          ui.progressBar_5->setValue(0);
+      int i=1;
 
         for(xml_node<> * Actual_command = command_node->first_node("Actual_command"); Actual_command; Actual_command = Actual_command->next_sibling())
         {
 
 
+            i++;
                 commands+=Actual_command->first_attribute("tool")->value();
                 commands+=ha;
                 commands+=Actual_command->first_attribute("shell_command")->value();
@@ -195,15 +197,17 @@ void MainWindow::command_executor(string file_name,int commands_no_run)
             ui.textBrowser_5->insertPlainText(Actual_command->value());
             ui.textBrowser_5->insertPlainText("\n");
             QString k;
+
             execute(k.fromStdString(commands));
             commands="";
             cout<<"Count :"<<i+1<<endl;
+             ui.progressBar_5->setValue(i);
 
         }
-        ui.progressBar_5->setValue(100);
-        }
 
-        cout << endl;
+
+
+
 
 
 
@@ -346,10 +350,13 @@ void MainWindow::on_progressBar_2_valueChanged(int value)
 }
 void MainWindow::execute(QString command)
 {
+
+
     QFile::remove(process_file);
     process_file_pos = 0;
     process.start(command);
     process_timer.start();
+
 }
 
 
@@ -809,12 +816,23 @@ void MainWindow::combochanged(int index)
 {
     ui.comboBox->clear();
     select_from_initial_entry( menu_file,index+1);
+     ui.progressBar_5->setValue(0);
 }
+
+void MainWindow::combo_2_changed(int index)
+{
+
+
+     ui.progressBar_5->setValue(0);
+}
+
 
 void MainWindow::get_menu_initial_entry(string menu_file,int item_no)
 {
     char buffer_2 [33];
     string menu_item_no=itoa (item_no,buffer_2,10);
+
+
 
 
 
