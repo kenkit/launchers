@@ -110,6 +110,7 @@ menu_file="items.xml";
 killed=false;
 
 display_initial_entry(menu_file);
+select_from_initial_entry( menu_file,1);
 //refresh();
 
 }
