@@ -11,11 +11,23 @@
 #include <sstream>
 using namespace std;
 using namespace rapidxml;
+
+
+
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
+    typedef struct {
+         std::string name;
+         std::string params;
+    } program ;
+
+
+    std::vector <program> m_programs;
+    void processCommand(int pos);
     explicit MainWindow(QWidget *parent = 0);
     void execute(QString command);
 
@@ -24,9 +36,15 @@ public:
     void execute_4(QString command);
     void execute_5(QString command);
 
+
     void select_initial_combo_entry(string menu_file,int selected);
     void get_menu_initial_entry(string menu_file,int item_no);
     string sellected_menu_entry;
+    int totalProcessed;
+    int totalPrograms;
+     int currProgram ;
+
+
 protected:
     void changeEvent(QEvent *e);
 
@@ -108,6 +126,9 @@ private slots:
     void combochanged(int index);
     void on_comboBox_2_currentIndexChanged(const QString &arg1);
     void combo_2_changed(int index);
+    void commandsFinished(void);
+    void programFinished(int exitCode);
+    void readyRead(void);
 
 private:
     Ui::MainWindow ui;

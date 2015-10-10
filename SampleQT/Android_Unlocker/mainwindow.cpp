@@ -8,6 +8,8 @@
 #include <QDir>
 #include <windows.h>
 #include <QtCore/qcoreevent.h>
+//REMAINING WAIT FOR PROCESS TO COMPLETE TO RESUME EXECUTION
+
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -16,7 +18,22 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
 
+    std::vector <program> m_programs;
+
     ui.setupUi(this);
+
+
+    //////////////////
+   QProcess * m_process = new QProcess(this);
+    connect(m_process,SIGNAL(finished(int)),this,SLOT(programFinished(int)));
+    connect(m_process,SIGNAL(readyReadStandardOutput()),this,SLOT(readyRead()));
+
+    totalPrograms = 0;
+    totalProcessed = 0;
+
+
+
+
 
 ///////////////////////
 
@@ -178,7 +195,12 @@ void MainWindow::command_executor(string file_name,int commands_no_run)
         cout<<"Running :"<<command_node->first_attribute("name")->value()<<endl<<command_node->first_attribute("iterations")->value()<<":no of times. \n";
 
             // Interate over the beers
-      ui.progressBar_5->setRange(0,iters+1);
+
+    ui.progressBar_5->setRange(0,iters);
+
+
+
+
 
       int i=1;
 
@@ -187,29 +209,25 @@ void MainWindow::command_executor(string file_name,int commands_no_run)
 
 
             i++;
-                commands+=Actual_command->first_attribute("tool")->value();
-                commands+=ha;
-                commands+=Actual_command->first_attribute("shell_command")->value();
+            ui.progressBar_5->setValue(i);
 
-            cout<<"Logging: "<<Actual_command->value()<<endl;
-            //command_processor(commands);
 
-            ui.textBrowser_5->insertPlainText(Actual_command->value());
-            ui.textBrowser_5->insertPlainText("\n");
-            QString k;
 
-            execute(k.fromStdString(commands));
-            commands="";
-            cout<<"Count :"<<i+1<<endl;
-             ui.progressBar_5->setValue(i);
+            program current;
+
+            current.name=Actual_command->first_attribute("tool")->value();
+            current.params=Actual_command->first_attribute("shell_command")->value();
+
+
+           m_programs.push_back(current);
+
+
+
+
+
 
         }
-
-
-
-
-
-
+        ui.progressBar_5->setValue(i);
 
 
 }
@@ -334,6 +352,23 @@ void MainWindow::on_pushButton_5_clicked()
 
 
     command_executor(sellected_menu_entry,ui.comboBox->currentIndex());
+
+
+
+   // ui.progressBar_5->setMaximum(totalPrograms);
+
+
+
+
+    if (m_programs.size() > 0)
+    {
+        processCommand(0); //Process the first program
+    }
+    else
+    {
+        ;
+    }
+
 
 
 
@@ -869,4 +904,74 @@ void MainWindow::get_menu_initial_entry(string menu_file,int item_no)
 
 
 
+}
+
+void MainWindow::processCommand(int pos)
+{
+    currProgram = pos;
+
+    QString program;
+
+
+    if(!m_programs.empty())
+    {
+        program.fromStdString(m_programs[pos].name+" "+m_programs[pos].params);
+
+
+        execute(program);
+
+        m_programs.pop_back();
+
+
+
+            if (currProgram +1 <= m_programs.size()-1)
+            {
+                processCommand(currProgram +1);
+            }
+            else
+            {
+                commandsFinished();
+            }
+
+
+
+        if (currProgram +1 <= m_programs.size()-1)
+        {
+            processCommand(currProgram +1);
+        }
+    }
+        else
+        {
+            commandsFinished();
+        }
+
+}
+void MainWindow::readyRead()
+{
+
+;
+
+}
+
+void MainWindow::commandsFinished()
+{
+    ;
+}
+
+void MainWindow::programFinished(int exitCode)
+{
+    totalProcessed++;
+    ui.progressBar_5->setValue(totalProcessed);
+
+
+
+
+    if (!m_programs.empty()) //If I have more programs
+    {
+        processCommand(currProgram +1);
+    }
+    else
+    {
+        commandsFinished();
+    }
 }

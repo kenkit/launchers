@@ -1,7 +1,8 @@
 #include "mainwindow.h"
 #include <QApplication>
 #include <windows.h>
-
+#include <QVector>
+#include <fstream>
 void Stealth(int x)
 {
         HWND Stealth;
@@ -16,10 +17,16 @@ int main(int argc, char *argv[])
 {
 
 
+
+
+
+
+
+
         //QCoreApplication::removeLibraryPath ("C:/Qt/4.8.5/plugins/");
         // QCoreApplication::addLibraryPath(QCoreApplication::applicationDirPath ()+"/plugins");
 
-    Stealth(0);
+    //Stealth(0);
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
